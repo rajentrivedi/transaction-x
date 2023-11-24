@@ -1,84 +1,45 @@
-# implements database transaction with ease
+# TransactionX - Laravel Transaction Package
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/rajen-trivedi/transaction-x.svg?style=flat-square)](https://packagist.org/packages/rajen-trivedi/transaction-x)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/rajen-trivedi/transaction-x/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/rajen-trivedi/transaction-x/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/rajen-trivedi/transaction-x/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/rajen-trivedi/transaction-x/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/rajen-trivedi/transaction-x.svg?style=flat-square)](https://packagist.org/packages/rajen-trivedi/transaction-x)
+**TransactionX** is a powerful Laravel package designed to simplify database transactions within your application. This package provides a seamless way to handle database transactions for specific routes, ensuring data integrity and consistency.
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+## Features
 
-## Support us
+- **Automatic Transactions:** TransactionX automatically manages database transactions for routes where it is applied. It starts a transaction before the route is executed and commits or rolls back the transaction based on the route's outcome.
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/transaction-x.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/transaction-x)
+- **Conditional Execution:** The package executes transactions only for non-GET requests, minimizing the impact on read-only operations and optimizing the database interactions for data-altering requests.
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
+- **Error Handling:** TransactionX intelligently handles exceptions and errors during the route execution. If an exception occurs or if there are errors reported by Laravel's error handling system, the middleware rolls back the transaction to maintain a consistent state.
 
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+## Getting Started
 
-## Installation
+ **Installation:**
+   Install the TransactionX package using Composer.
 
-You can install the package via composer:
+   ```bash
+   composer require rajentrivedi/transactionx
+```
 
+## Setup
+**Apply the TransactionMiddleware to the routes where you want to enable automatic transactions.**
 ```bash
-composer require rajen-trivedi/transaction-x
+Route::group(['middleware' => 'transaction-x'], function () {
+    	// Your routes here
+});
 ```
-
-You can publish and run the migrations with:
-
+**Or, you can apply the TransactionMiddleware to specific route.**
 ```bash
-php artisan vendor:publish --tag="transaction-x-migrations"
-php artisan migrate
+Route::post('/example', function () {
+    	DB::table('your_table')->insert(['column' => 'value']);
+		DB::table('some_other_table')->insert(['column' => 'value']);
+    	return response()->json(['success' => true]);
+})->middleware('transaction-x');
 ```
 
-You can publish the config file with:
+##Enjoy Consistent Transactions##
+**With TransactionX, focus on building your application logic, while the package ensures that your database transactions are handled consistently.**
 
-```bash
-php artisan vendor:publish --tag="transaction-x-config"
-```
+##Contribution##
+**If you encounter issues or have suggestions for improvements, feel free to open an issue or submit a pull request on the GitHub repository.**
 
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="transaction-x-views"
-```
-
-## Usage
-
-```php
-$transactionX = new Rajen Trivedi\TransactionX();
-echo $transactionX->echoPhrase('Hello, Rajen Trivedi!');
-```
-
-## Testing
-
-```bash
-composer test
-```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [Rajen Trivedi](https://github.com/rajen.trivedi)
-- [All Contributors](../../contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+##License##
+**TransactionX is open-source software licensed under the MIT License.**
