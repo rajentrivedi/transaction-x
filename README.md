@@ -13,20 +13,24 @@
 ## Getting Started
 
  **Installation:**
-   Install the TransactionX package using Composer.
+
+Install the TransactionX package using Composer.
 
    ```bash
-   composer require rajentrivedi/transactionx
+   composer require rajentrivedi/transaction-x
 ```
 
-## Setup
-**Apply the TransactionMiddleware to the routes where you want to enable automatic transactions.**
+**Setup:**
+
+Apply the TransactionMiddleware to the route group where you want to enable automatic transactions.
+
 ```bash
 Route::group(['middleware' => 'transaction-x'], function () {
     	// Your routes here
 });
 ```
-**Or, you can apply the TransactionMiddleware to specific route.**
+Or, you can apply the TransactionMiddleware to specific route.
+
 ```bash
 Route::post('/example', function () {
     	DB::table('your_table')->insert(['column' => 'value']);
@@ -35,11 +39,79 @@ Route::post('/example', function () {
 })->middleware('transaction-x');
 ```
 
+## Before Applying TransactionX
+
+```bash
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\UserProfile;
+
+class UserController extends Controller
+{
+    public function updateProfile(Request $request, $userId)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Update user profile logic
+            $user = User::find($userId);
+            $user->update($request->all());
+
+            // Additional operations with other tables
+            $profile = UserProfile::where('user_id', $userId)->first();
+            $profile->update($request->get('profile_data'));
+
+            // Another operation...
+
+            DB::commit();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+}
+```
+In this example, there are operations involving two different tables (User and UserProfile). Manually handling transactions in this scenario can lead to increased complexity and a higher chance of errors.
+
+## After Applying TransactionX
+
+```bash
+use App\Models\User;
+use App\Models\UserProfile;
+class UserController extends Controller
+{
+
+    public function updateProfile(Request $request, $userId)
+    {
+        // Update user profile logic
+        $user = User::find($userId);
+        $user->update($request->all());
+
+        // Additional operations with other tables
+        $profile = UserProfile::where('user_id', $userId)->first();
+        $profile->update($request->get('profile_data'));
+
+        // Another operation...
+
+        return response()->json(['success' => true]);
+    }
+}
+
+```
+
+With TransactionX, the middleware takes care of the transaction handling, even when there are multiple database interactions within the same route. This leads to cleaner and more readable code, as the developer can focus on the logic of the route without the need to manage transactions explicitly. The middleware ensures that the transactions are handled consistently across different tables, promoting code cleanliness and maintainability.
+
 ## Enjoy Consistent Transactions
-**With TransactionX, focus on building your application logic, while the package ensures that your database transactions are handled consistently.**
+
+With TransactionX, focus on building your application logic, while the package ensures that your database transactions are handled consistently.
 
 ## Contribution
-**If you encounter issues or have suggestions for improvements, feel free to open an issue or submit a pull request on the GitHub repository.**
+
+If you encounter issues or have suggestions for improvements, feel free to open an issue or submit a pull request on the GitHub repository.
 
 ## License
-**TransactionX is open-source software licensed under the MIT License.**
+
+TransactionX is open-source software licensed under the MIT License.
