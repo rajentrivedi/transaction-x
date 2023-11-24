@@ -2,9 +2,9 @@
 
 namespace RajenTrivedi\TransactionX;
 
+use RajenTrivedi\TransactionX\Commands\TransactionXCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use RajenTrivedi\TransactionX\Commands\TransactionXCommand;
 
 class TransactionXServiceProvider extends PackageServiceProvider
 {
@@ -17,6 +17,7 @@ class TransactionXServiceProvider extends PackageServiceProvider
     {
         $router->aliasMiddleware('transaction-x', \RajenTrivedi\TransactionX\Middleware\TransactionMiddleware::class);
     }
+
     public function configurePackage(Package $package): void
     {
         /*
