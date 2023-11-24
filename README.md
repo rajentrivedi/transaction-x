@@ -35,11 +35,11 @@ Route::post('/example', function () {
 })->middleware('transaction-x');
 ```
 
-##Enjoy Consistent Transactions##
+## Enjoy Consistent Transactions
 **With TransactionX, focus on building your application logic, while the package ensures that your database transactions are handled consistently.**
 
-##Contribution##
+## Contribution
 **If you encounter issues or have suggestions for improvements, feel free to open an issue or submit a pull request on the GitHub repository.**
 
-##License##
+## License
 **TransactionX is open-source software licensed under the MIT License.**
