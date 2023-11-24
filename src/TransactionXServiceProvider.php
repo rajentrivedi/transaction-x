@@ -26,10 +26,6 @@ class TransactionXServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('transaction-x')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_transaction-x_table')
-            ->hasCommand(TransactionXCommand::class);
+            ->name('transaction-x');
     }
 }
