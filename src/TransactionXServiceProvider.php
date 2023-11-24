@@ -2,7 +2,6 @@
 
 namespace RajenTrivedi\TransactionX;
 
-use RajenTrivedi\TransactionX\Commands\TransactionXCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
