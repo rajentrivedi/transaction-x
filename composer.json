@@ -74,10 +74,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Rajen Trivedi\\TransactionX\\TransactionXServiceProvider"
+                "RajenTrivedi\\TransactionX\\TransactionXServiceProvider"
             ],
             "aliases": {
-                "TransactionX": "Rajen Trivedi\\TransactionX\\Facades\\TransactionX"
+                "TransactionX": "RajenTrivedi\\TransactionX\\Facades\\TransactionX"
             }
         }
     },

@@ -1,10 +1,10 @@
 <?php
 
-namespace Rajen Trivedi\TransactionX\Tests;
+namespace RajenTrivedi\TransactionX\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Rajen Trivedi\TransactionX\TransactionXServiceProvider;
+use RajenTrivedi\TransactionX\TransactionXServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -13,7 +13,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Rajen Trivedi\\TransactionX\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'RajenTrivedi\\TransactionX\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
