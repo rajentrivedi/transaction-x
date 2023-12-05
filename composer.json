@@ -4,7 +4,17 @@
     "keywords": [
         "Rajen Trivedi",
         "laravel",
-        "transaction-x"
+        "transaction-x",
+        "transaction",
+        "database",
+        "mysql",
+        "sql",
+        "postgress",
+        "sqlite",
+        "mongodb",
+        "database management",
+        "db",
+        "php"
     ],
     "homepage": "https://github.com/rajen-trivedi/transaction-x",
     "license": "MIT",
